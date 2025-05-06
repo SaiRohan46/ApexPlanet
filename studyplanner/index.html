@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Study Planner</title>
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="C:\Users\Documents\spp-2\style.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>📘 My Weekly Study Planner</h1>
+
+    <!-- Task Input Form -->
+    <form id="taskForm">
+      <input type="text" id="taskInput" placeholder="Enter your study task..." required />
+      <select id="daySelect">
+        <option value="">Select Day</option>
+        <option value="mon">Monday</option>
+        <option value="tue">Tuesday</option>
+        <option value="wed">Wednesday</option>
+        <option value="thu">Thursday</option>
+        <option value="fri">Friday</option>
+        <option value="sat">Saturday</option>
+        <option value="sun">Sunday</option>
+      </select>
+      <button type="submit">Add Task</button>
+    </form>
+
+    <!-- Calendar Layout -->
+    <div class="calendar">
+      <div class="day-column" id="mon"><h2>Monday</h2></div>
+      <div class="day-column" id="tue"><h2>Tuesday</h2></div>
+      <div class="day-column" id="wed"><h2>Wednesday</h2></div>
+      <div class="day-column" id="thu"><h2>Thursday</h2></div>
+      <div class="day-column" id="fri"><h2>Friday</h2></div>
+      <div class="day-column" id="sat"><h2>Saturday</h2></div>
+      <div class="day-column" id="sun"><h2>Sunday</h2></div>
+    </div>
+  </div>
+
+  <script src="C:\Users\Documents\spp-2\script.js"></script>
+</body>
+</html>

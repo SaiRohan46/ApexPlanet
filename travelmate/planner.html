@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Trip Notes - TravelMate</title>
+  <link rel="stylesheet" href="C:\Users\KAVYA\Documents\fullproject-5\style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Quicksand', sans-serif;
+      margin: 0;
+      background: #e8f0ff;
+      color: #333;
+    }
+
+    header, footer {
+      background: #001f3f;
+      color: white;
+      padding: 15px;
+      text-align: center;
+    }
+
+    .nav-links {
+      list-style: none;
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      padding: 0;
+    }
+
+    .nav-links a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .container {
+      padding: 20px;
+      max-width: 900px;
+      margin: auto;
+    }
+
+    h2 {
+      text-align: center;
+    }
+
+    .trip-form {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+
+    .trip-form input {
+      padding: 10px;
+      border: 2px solid #001f3f;
+      border-radius: 6px;
+      flex: 1 1 200px;
+    }
+
+    .trip-form button {
+      background: #0055a5;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .trip-form button:hover {
+      background: #003e7e;
+    }
+
+    .trip-card {
+      background: white;
+      border-left: 5px solid #001f3f;
+      padding: 15px;
+      margin-bottom: 15px;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      transition: transform 0.3s;
+    }
+
+    .trip-card:hover {
+      transform: scale(1.02);
+    }
+
+    .trip-card h3 {
+      margin: 0 0 10px;
+    }
+
+    .trip-card p {
+      margin: 5px 0;
+    }
+
+    .trip-actions {
+      margin-top: 10px;
+    }
+
+    .trip-actions button {
+      padding: 5px 10px;
+      margin-right: 10px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .accept-btn {
+      background: #28a745;
+      color: white;
+    }
+
+    .reject-btn {
+      background: #dc3545;
+      color: white;
+    }
+
+    .remove-btn {
+      background: #6c757d;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>TravelMate</h1>
+    <ul class="nav-links">
+      <li><a href="C:\Users\KAVYA\Documents\fullproject-5\index.html">Home</a></li>
+      <li><a href="C:\Users\KAVYA\Documents\fullproject-5\explore.html">Explore</a></li>
+      <li><a href="C:\Users\KAVYA\Documents\fullproject-5\planner.html">Trip Notes</a></li>
+      <li><a href="C:\Users\KAVYA\Documents\fullproject-5\contact.html">Contact</a></li>
+    </ul>
+  </header>
+
+  <main class="container">
+    <h2>Trip Notes</h2>
+
+    <div class="trip-form">
+      <input type="text" id="destination" placeholder="Destination" required />
+      <input type="date" id="date" required />
+      <input type="text" id="bookedBy" placeholder="Booked By" required />
+      <button onclick="addTrip()">Add Trip</button>
+    </div>
+
+    <div id="tripList"></div>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 TravelMate. All rights reserved.</p>
+  </footer>
+
+  <script>
+    let trips = JSON.parse(localStorage.getItem("tripNotes")) || [];
+
+    function saveTrips() {
+      localStorage.setItem("tripNotes", JSON.stringify(trips));
+    }
+
+    function displayTrips() {
+      const list = document.getElementById("tripList");
+      list.innerHTML = "";
+      trips.forEach((trip, index) => {
+        const card = document.createElement("div");
+        card.className = "trip-card";
+
+        card.innerHTML = `
+          <h3>${trip.destination}</h3>
+          <p><strong>Date:</strong> ${trip.date}</p>
+          <p><strong>Booked By:</strong> ${trip.bookedBy}</p>
+          <div class="trip-actions">
+            <button class="accept-btn" onclick="alert('Trip to ${trip.destination} confirmed!')">Accept</button>
+            <button class="reject-btn" onclick="rejectTrip(${index})">Reject</button>
+            <button class="remove-btn" onclick="removeTrip(${index})">Remove</button>
+          </div>
+        `;
+
+        list.appendChild(card);
+      });
+    }
+
+    function addTrip() {
+      const dest = document.getElementById("destination").value.trim();
+      const date = document.getElementById("date").value;
+      const person = document.getElementById("bookedBy").value.trim();
+
+      if (dest && date && person) {
+        trips.push({ destination: dest, date: date, bookedBy: person });
+        saveTrips();
+        displayTrips();
+        document.getElementById("destination").value = "";
+        document.getElementById("date").value = "";
+        document.getElementById("bookedBy").value = "";
+      } else {
+        alert("Please fill in all fields.");
+      }
+    }
+
+    function removeTrip(index) {
+      if (confirm("Are you sure you want to remove this trip?")) {
+        trips.splice(index, 1);
+        saveTrips();
+        displayTrips();
+      }
+    }
+
+    function rejectTrip(index) {
+      if (confirm("Reject this trip?")) {
+        trips.splice(index, 1);
+        saveTrips();
+        displayTrips();
+        alert("Trip rejected.");
+      }
+    }
+
+    displayTrips();
+  </script>
+
+</body>
+</html>

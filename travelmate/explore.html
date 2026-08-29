@@ -1,27 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Explore Destinations - TravelMate</title>
-  <link rel="stylesheet" href="C:\Users\KAVYA\Documents\fullproject-5\style.css">
+  <link rel="stylesheet" href="style.css">
   <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
   <style>
     body {
       margin: 0;
-      font-family: 'Quicksand', sans-serif;  
-      color: #fff;
+      font-family: 'Quicksand', sans-serif;
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
       min-height: 100vh;
       display: flex;
       flex-direction: column;
     }
 
     header {
-      background: #001F54;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
       padding: 20px;
       display: flex;
       justify-content: space-between;
       align-items: center;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
     }
 
     .logo {
@@ -42,59 +44,251 @@
       color: #fff;
       font-weight: bold;
       padding: 8px 16px;
-      border-radius: 4px;
-      transition: background 0.3s;
+      border-radius: 20px;
+      transition: all 0.3s;
     }
 
     nav ul li a:hover {
-      background: #00509e;
+      background: rgba(255, 255, 255, 0.2);
+      transform: translateY(-2px);
     }
 
     .controls {
-      padding: 20px;
+      padding: 2rem;
       text-align: center;
+      background: white;
+      margin: 1.5rem auto;
+      max-width: 1100px;
+      width: 90%;
+      border-radius: 15px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
     }
 
-    select, button {
-      padding: 10px;
-      margin: 10px;
-      border:2px solid black;
-      border-radius: 5px;
+    .controls h2 {
+      margin-top: 0;
+      color: #333;
+    }
+
+    .filter-group {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .filter-item {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .filter-item label {
+      font-weight: bold;
+      color: #333;
+    }
+
+    select,
+    button {
+      padding: 12px;
+      margin: 0;
+      border: 2px solid #667eea;
+      border-radius: 8px;
       font-size: 16px;
+      font-family: 'Quicksand', sans-serif;
+      background: white;
+      color: #333;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    select:focus {
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    }
+
+    button {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border: none;
+      font-weight: bold;
+      box-shadow: 0 4px 10px rgba(102, 126, 234, 0.3);
+      transition: all 0.3s;
+    }
+
+    button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 15px rgba(102, 126, 234, 0.5);
     }
 
     #destinationList {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-      gap: 20px;
-      padding: 20px;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 2rem;
+      padding: 2rem;
+      max-width: 1400px;
+      margin: 0 auto;
+      width: 100%;
+      flex: 1;
     }
 
     .destination {
       background-color: #fff;
       color: #000;
-      border-radius: 10px;
+      border-radius: 15px;
       overflow: hidden;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-      transition: transform 0.3s;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s;
     }
 
     .destination:hover {
-      transform: scale(1.05);
+      transform: translateY(-10px);
+      box-shadow: 0 15px 40px rgba(102, 126, 234, 0.25);
     }
 
-    .destination img {
+    .destination-image-wrapper {
+      position: relative;
+      height: 200px;
+      overflow: hidden;
+    }
+
+    .destination-image-wrapper img {
       width: 100%;
-      height: 180px;
+      height: 100%;
       object-fit: cover;
+      transition: transform 0.3s;
+    }
+
+    .destination:hover .destination-image-wrapper img {
+      transform: scale(1.1);
+    }
+
+    .destination-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .destination:hover .destination-overlay {
+      opacity: 1;
     }
 
     .destination-info {
-      padding: 15px;
+      padding: 1.5rem;
+    }
+
+    .destination-meta {
+      display: flex;
+      gap: 1rem;
+      margin: 0.5rem 0;
+    }
+
+    .category-tag {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 0.3rem 0.8rem;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: bold;
+    }
+
+    .rating {
+      color: #ffc107;
+      font-weight: bold;
+    }
+
+    .description {
+      color: #666;
+      font-size: 0.95rem;
+      line-height: 1.4;
+    }
+
+    .destination-details {
+      display: flex;
+      justify-content: space-between;
+      padding: 1rem 0;
+      border-top: 1px solid #eee;
+      border-bottom: 1px solid #eee;
+      margin: 1rem 0;
+      font-weight: bold;
+    }
+
+    .price {
+      color: #28a745;
+    }
+
+    .duration {
+      color: #007bff;
+    }
+
+    .destination-actions {
+      display: flex;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .action-btn,
+    .btn-book,
+    .btn-details {
+      padding: 0.75rem 1rem;
+      border: none;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-size: 0.95rem;
+    }
+
+    .action-btn {
+      background: white;
+      color: #667eea;
+      border: 2px solid #667eea;
+    }
+
+    .action-btn:hover {
+      background: #667eea;
+      color: white;
+      transform: scale(1.05);
+    }
+
+    .btn-book,
+    .btn-details {
+      flex: 1;
+    }
+
+    .btn-book {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      box-shadow: 0 4px 10px rgba(102, 126, 234, 0.3);
+    }
+
+    .btn-book:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 15px rgba(102, 126, 234, 0.5);
+    }
+
+    .btn-details {
+      background: #f5f5f5;
+      color: #667eea;
+      border: 2px solid #667eea;
+    }
+
+    .btn-details:hover {
+      background: #667eea;
+      color: white;
+      transform: translateY(-2px);
     }
 
     .destination-info h3 {
-      margin: 0;
+      margin: 0 0 0.5rem;
+      color: #333;
     }
 
     .destination-info p {
@@ -102,42 +296,75 @@
     }
 
     footer {
-      background: #001f3f;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
       color: #fff;
       text-align: center;
-      padding: 15px;
+      padding: 2rem;
       margin-top: auto;
     }
   </style>
 </head>
+
 <body>
   <header>
     <div class="logo">TRAVELMATE</div>
     <nav>
       <ul>
-        <li><a href="C:\Users\KAVYA\Documents\fullproject-5\index.html">Home</a></li>
-        <li><a href="C:\Users\KAVYA\Documents\fullproject-5\explore.html">Explore</a></li>
-        <li><a href="C:\Users\KAVYA\Documents\fullproject-5\planner.html">Trip Notes</a></li>
-        <li><a href="C:\Users\KAVYA\Documents\fullproject-5\contact.html">Contact</a></li>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="explore.html">Explore</a></li>
+        <li><a href="planner.html">Trip Notes</a></li>
+        <li><a href="contact.html">Contact</a></li>
       </ul>
     </nav>
   </header>
 
   <div class="controls">
-    <select id="categoryFilter">
-      <option value="all">All</option>
-      <option value="adventure">Adventure</option>
-      <option value="relaxation">Relaxation</option>
-      <option value="mountain">Mountain</option>
-    </select>
+    <h2>🌍 Find Your Perfect Destination</h2>
 
-    <select id="sortOptions">
-      <option value="default">Sort By</option>
-      <option value="price">Price (Low to High)</option>
-      <option value="rating">Rating (High to Low)</option>
-    </select>
+    <div class="filter-group">
+      <div class="filter-item">
+        <label for="categoryFilter">📍 Category</label>
+        <select id="categoryFilter">
+          <option value="all">All Categories</option>
+          <option value="adventure">Adventure</option>
+          <option value="relaxation">Relaxation</option>
+          <option value="mountain">Mountain</option>
+        </select>
+      </div>
 
-    <button onclick="fetchAndDisplayDestinations()">Search</button>
+      <div class="filter-item">
+        <label for="priceRange">💰 Budget</label>
+        <select id="priceRange">
+          <option value="all">All Prices</option>
+          <option value="0-500">Under $500</option>
+          <option value="500-800">$500 - $800</option>
+          <option value="800-1200">$800 - $1200</option>
+          <option value="1200-9999">$1200+</option>
+        </select>
+      </div>
+
+      <div class="filter-item">
+        <label for="durationFilter">📅 Duration</label>
+        <select id="durationFilter">
+          <option value="all">Any Duration</option>
+          <option value="4">Up to 4 days</option>
+          <option value="6">Up to 6 days</option>
+          <option value="8">Up to 8 days</option>
+        </select>
+      </div>
+
+      <div class="filter-item">
+        <label for="sortOptions">📊 Sort By</label>
+        <select id="sortOptions">
+          <option value="default">Default</option>
+          <option value="price">Price (Low to High)</option>
+          <option value="rating">Rating (High to Low)</option>
+          <option value="duration">Duration (Shortest First)</option>
+        </select>
+      </div>
+    </div>
+
+    <button onclick="fetchAndDisplayDestinations()">🔍 Search</button>
   </div>
 
   <div id="destinationList"></div>
@@ -146,6 +373,7 @@
     <p>&copy; 2025 TravelMate. All rights reserved.</p>
   </footer>
 
-  <script src="C:\Users\KAVYA\Documents\fullproject-5\script.js"></script>
+  <script src="script.js"></script>
 </body>
+
 </html>

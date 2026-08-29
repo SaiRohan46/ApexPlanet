@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Trip Notes - TravelMate</title>
-  <link rel="stylesheet" href="C:\Users\KAVYA\Documents\fullproject-5\style.css">
+  <link rel="stylesheet" href="style.css">
   <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
   <style>
     body {
@@ -12,13 +13,18 @@
       margin: 0;
       background: #e8f0ff;
       color: #333;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
     }
 
-    header, footer {
+    header,
+    footer {
       background: #001f3f;
       color: white;
       padding: 15px;
       text-align: center;
+      flex-shrink: 0;
     }
 
     .nav-links {
@@ -38,6 +44,8 @@
     .container {
       padding: 20px;
       max-width: 900px;
+      flex: 1;
+      width: 100%;
       margin: auto;
     }
 
@@ -79,7 +87,7 @@
       padding: 15px;
       margin-bottom: 15px;
       border-radius: 8px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
       transition: transform 0.3s;
     }
 
@@ -123,15 +131,16 @@
     }
   </style>
 </head>
+
 <body>
 
   <header>
     <h1>TravelMate</h1>
     <ul class="nav-links">
-      <li><a href="C:\Users\KAVYA\Documents\fullproject-5\index.html">Home</a></li>
-      <li><a href="C:\Users\KAVYA\Documents\fullproject-5\explore.html">Explore</a></li>
-      <li><a href="C:\Users\KAVYA\Documents\fullproject-5\planner.html">Trip Notes</a></li>
-      <li><a href="C:\Users\KAVYA\Documents\fullproject-5\contact.html">Contact</a></li>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="explore.html">Explore</a></li>
+      <li><a href="planner.html">Trip Notes</a></li>
+      <li><a href="contact.html">Contact</a></li>
     </ul>
   </header>
 
@@ -219,4 +228,5 @@
   </script>
 
 </body>
+
 </html>
